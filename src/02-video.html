@@ -21,27 +21,7 @@
     ></iframe>
 
     <script src="https://player.vimeo.com/api/player.js"></script>
-    <script>
-      const iframe = document.querySelector('iframe');
-      const player = new Vimeo.Player(iframe);
-      let videoplayerCurrentTime;
-
-      // localStorage.setItem("video-player-CurrentTime", JSON.stringify(videoplayerCurrentTime));
-
-      player.on('play', function () {
-        console.log('played the video!');
-      });
-
-      player.getVideoTitle().then(function (title) {
-        console.log('title:', title);
-      });
-
-      player.on('timeupdate', function (data) {
-        videoplayerCurrentTime = data.seconds;  
-        console.log(videoplayerCurrentTime);
-        });
-
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
     <script src="js/02-video.js" type="module"></script>
   </body>
 </html>

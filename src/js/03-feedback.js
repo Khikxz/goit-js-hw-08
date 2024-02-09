@@ -1,23 +1,28 @@
 const form = document.querySelector(".feedback-form");
 const email = document.querySelector('[name = "email"]');
 const message = document.querySelector('[name = "message"]');
-let emailInput, messageInput;
 
 const formState = {
-    email: "",
-    message: "",
+    email: "example@email.xyz",
+    message: "hello world",
 };
 
 localStorage.setItem("feedback-form-state", JSON.stringify(formState));
+let emailInput;
+let messageInput;
 
-email.addEventListener("input", (event) => {
-    localStorage.setItem("email", event.currentTarget.value);
-    
-});
+email.value = localStorage.getItem("email") ?? "";
+message.value = localStorage.getItem("message") ?? "";
 
-message.addEventListener("input", (event) => {
-    localStorage.setItem("message", event.currentTarget.value);
-});
+email.addEventListener("input", _.throttle((event) => {
+    emailInput = event.currentTarget.value;
+    localStorage.setItem("email", emailInput);    
+}, 500));
+
+message.addEventListener("input", _.throttle((event) => {
+    messageInput = event.currentTarget.value;
+    localStorage.setItem("message", messageInput);
+}, 500));
 
 form.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -25,8 +30,9 @@ form.addEventListener("submit", (event) => {
     if (event.target.elements.email.value === "" || event.target.elements.message.value === "") {
         return alert("All fields must be filled in");
     }
-
-    // console.log(`Email: ${emailInput} \nMessage: ${messageInput}`);
     console.log(`Email: ${localStorage.getItem("email")} \nMessage: ${localStorage.getItem("message")}`);
-    event.target.reset();
+    localStorage.clear();
+    form.reset();
 });
+
+
